@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+
 import Person from './Person/Person';
 
 class App extends Component {
@@ -10,6 +11,7 @@ class App extends Component {
       { name: 'Stephanie', age: 26 },
     ],
     otherState: 'some other value',
+    showPersons: false,
   };
 
   switchNameHandler = (newName) => {
@@ -34,6 +36,11 @@ class App extends Component {
     });
   };
 
+  togglePersonsHandler = () => {
+    const doesShow = this.state.showPersons;
+    this.setState({ showPersons: !doesShow });
+  };
+
   render() {
     const style = {
       backgroundColor: 'white',
@@ -43,32 +50,26 @@ class App extends Component {
       cursor: 'pointer',
     };
 
+    let persons = null;
+
+    if (this.state.showPersons) {
+      persons = (
+        <div>
+          {this.state.persons.map((person) => {
+            return <Person name={person.name} age={person.age} />;
+          })}
+        </div>
+      );
+    }
+
     return (
       <div className="App">
         <h1>Hi, I'm a react App</h1>
         <p>This is realy working</p>
-        <button
-          style={style}
-          onClick={() => this.switchNameHandler('Bartłomiej!')}
-        >
-          Switch name
+        <button style={style} onClick={this.togglePersonsHandler}>
+          Toggle Persons
         </button>
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age}
-        ></Person>
-        <Person
-          name={this.state.persons[1].name}
-          age={this.state.persons[1].age}
-          click={this.switchNameHandler.bind(this, 'Bartek!!')}
-          changed={this.nameChangedHandler}
-        >
-          I like playing piano
-        </Person>
-        <Person
-          name={this.state.persons[2].name}
-          age={this.state.persons[2].age}
-        ></Person>
+        {persons}
       </div>
     );
   }
