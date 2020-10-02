@@ -21,7 +21,7 @@ class App extends Component {
   };
 
   static getDerivedStateFromProps(props, state) {
-    console.log('[app.js] getDeriverStateFromPops', props);
+    console.log('[App.js] getDerivedStateFromPops', props);
     return state;
   }
 
