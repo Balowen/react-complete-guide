@@ -6,12 +6,26 @@ const cockpit = (props) => {
     // executes every render cycle of cockpit
     console.log('[Cockpit.js] useEffect');
     // HTTP request...
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       alert('Saved data to cloud!');
     }, 1000);
+
+    // that return runs BEFORE the main useEffect function runs, but AFTER the (first) render cycle
+    return () => {
+      clearTimeout(timer);
+      console.log('[Cockpit.js] cleanup work in useEffect');
+    };
+
     // only applies if [props.persons] changes
-    // if you pass [] it will run only on the first render (as if ComponentDidMount)
+    // if you pass [] it will run only on the first render (as if ComponentDidMount) and when its unmounted
   }, []);
+
+  useEffect(() => {
+    console.log('[Cockpit.js] 2nd useEffect');
+    return () => {
+      console.log('[Cockpit.js] cleanup work in 2nd useEffect');
+    };
+  });
 
   const assignedClasses = [];
   let btnClass = '';
