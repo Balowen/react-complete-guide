@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classes from './Cockpit.css';
 
 const cockpit = (props) => {
+  useEffect(() => {
+    // executes every render cycle of cockpit
+    console.log('[Cockpit.js] useEffect');
+    // HTTP request...
+    setTimeout(() => {
+      alert('Saved data to cloud!');
+    }, 1000);
+    // only applies if [props.persons] changes
+    // if you pass [] it will run only on the first render (as if ComponentDidMount)
+  }, []);
+
   const assignedClasses = [];
   let btnClass = '';
   if (props.showPersons) {
